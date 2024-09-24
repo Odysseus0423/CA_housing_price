@@ -32,10 +32,8 @@ elif income_level == 'High':
 df = df[df.median_house_value >= price_filter]
 
 st.subheader("Housing Locations on the Map")
-if not df.empty:
-    st.map(df[['latitude', 'longitude']])
-else:
-    st.write("No data available for the selected filters.")
+
+st.map(df[['latitude', 'longitude']])
 
 st.subheader('Housing Details:')
 
@@ -44,8 +42,7 @@ st.write(df[['median_house_value', 'latitude', 'longitude']])
 st.subheader('California Housing Price Levels by Location')
 
 fig, ax = plt.subplots(figsize=(10, 5))
-pop_sum = df.groupby('ocean_proximity')['median_house_value'].sum()
-pop_sum.plot.bar(ax=ax)
-ax.set_ylabel("Total Median House Value")
-ax.set_xlabel("Location")
+ax.hist(df['median_house_value'],bins=30)
+ax.set_ylabel("Median House Value")
+ax.set_xlabel("Frequency")
 st.pyplot(fig)
